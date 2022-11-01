@@ -97,3 +97,6 @@ RUN git clone https://github.com/tensorflow/models.git && \
 # Install google cloud SDK
 RUN curl -sSL https://sdk.cloud.google.com > /tmp/gcl && bash /tmp/gcl --install-dir=~/gcloud --disable-prompts
 ENV PATH="$PATH:/root/gcloud/google-cloud-sdk/bin"
+
+# Fix keras error
+RUN pip install keras==2.5.0rc
