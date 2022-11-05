@@ -100,3 +100,5 @@ ENV PATH="$PATH:/root/gcloud/google-cloud-sdk/bin"
 
 # Fix keras error
 RUN pip install keras==2.5.0rc
+# Fix numpy error while running evaluation
+RUN pip install pycocotools==2.0.5
