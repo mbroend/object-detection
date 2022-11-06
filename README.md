@@ -67,6 +67,9 @@ You should use the data already present in `/home/workspace/data/waymo` director
 
 Keep in mind that you should refer to this analysis to create the different spits (training, testing and validation).
 
+Unless you've altered the docker run command, the jupyter notebook server can be run with the following command:
+
+jupyter notebook --ip=0.0.0.0 --allow-root
 
 ### Create the training - validation splits
 In the class, we talked about cross-validation and the importance of creating meaningful training and validation splits. For this project, you will have to create your own training and validation sets using the files located in `/home/workspace/data/waymo`. The `split` function in the `create_splits.py` file does the following:
