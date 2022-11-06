@@ -20,7 +20,7 @@ Create a container with:
 docker run --gpus all -v <absolute path of git repo>:/app/project/ -p 8888:8888 -p 6006:6006 -ti project-dev bash 
 ```
 
-and any other flag you find useful to your system (eg, `--shm-size` is usefull for downloading and processing the files). 
+and any other flag you find useful to your system (eg, `--shm-size` is usefull for downloading and processing the files. Set it as high as your memory allows :-) ). 
 
 
 ## Set up
