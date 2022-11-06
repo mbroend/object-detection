@@ -52,10 +52,19 @@ jupyter notebook --ip=0.0.0.0 --allow-root
 
 The notebook server can then be accesed at localhost:8888 on the docker-host.
 
-In the Exploratory Data Analysis notebook you'll find a function that displays 10 random images (from the set of 100) along with a color coded bounding boxes for each of the objects in the image. (Red = vehicles, green = Pedestrian, blue = cyclists).
+In the Exploratory Data Analysis notebook you'll find a function that displays 10 random images (from the set of 100) along with a color coded bounding boxes for each of the objects in the image. (Red = vehicles, green = Pedestrian, blue = cyclists). Along with viewing the images, basic statistics of the dataset are provided.
 
-Along with viewing the images, basic statistics of the dataset are provided.
+A few examples:
 
+![Example image](visualizations/examples_image.png "Example image")
+
+![Example image](visualizations/examples_image2.png "Example image")
+
+Things to note at this point: 
+1. We probably don't have equal classes
+2. The weather and lighting will probably vary alot in the images.
+
+Which leads us to investigate number of classes, images and image variability.
 
 
 ## Splitting the data: Train/val/test splits
@@ -117,11 +126,17 @@ To monitor the training, you can launch a tensorboard instance by running:
 ```
 python -m tensorboard.main --logdir experiments/reference/ --host 0.0.0.0
 ```
-
 You can now access the tensorboard from the docker-host at localhost:6006.
 
 ### Results
 This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
+
+![Example image](visualizations/baseline_loss_classification_loss.png "Example image")
+![Example image](visualizations/baseline_loss_localization_loss.png "Example image")
+![Example image](visualizations/baseline_loss_regularization_loss.png "Example image")
+![Example image](visualizations/baseline_loss_total_loss.png "Example image")
+![Example image](visualizations/baseline_precision.png "Example image")
+![Example image](visualizations/baseline_recall.png "Example image")
 
 ## Improve the performance
 
@@ -131,16 +146,36 @@ Keep in mind that the following are also available:
 * experiment with the optimizer: type of optimizer, learning rate, scheduler etc
 * experiment with the architecture. The Tf Object Detection API [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) offers many architectures. Keep in mind that the `pipeline.config` file is unique for each architecture and you will have to edit it.
 
+  data_augmentation_options {
+    random_rgb_to_gray {
+      probability: 0.2
+    }
+  }
+  data_augmentation_options {
+    random_black_patches {
+      size_to_image_ratio: 0.05
+    }
+  }
+  data_augmentation_options {
+    random_jitter_boxes {
+    }
+  }
+  data_augmentation_options {
+    random_adjust_brightness {
+    }
+  }
+
+
 **Important:** If you are working on the workspace, your storage is limited. You may to delete the checkpoints files after each experiment. You should however keep the `tf.events` files located in the `train` and `eval` folder of your experiments. You can also keep the `saved_model` folder to create your videos.
 
 ### Training
 To launch a training process with the config file from above use the following:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/baseline.config
+python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/improved.config
 ```
 Once the training is finished, launch the evaluation process:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/baseline.config --checkpoint_dir=experiments/reference/
+python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/improved.config --checkpoint_dir=experiments/reference/
 ```
 
 
