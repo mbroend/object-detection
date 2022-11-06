@@ -50,25 +50,6 @@ def split(source, destination):
         shutil.copy(source+elem,destination+"/val/"+elem)
     for elem in train_files:
         shutil.copy(source+elem,destination+"/train/"+elem)
-    '''
-    dataset = get_dataset(f"{source}*.tfrecord")
-    dataset = dataset.shuffle(100)
-    #dataset_size = len(list(dataset))
-    dataset_size = 100
-    print(dataset_size)
-    test_size = 3
-    train_size = int(0.8 * dataset_size-test_size)
-    val_size = int(0.2 * dataset_size-test_size)
-    
-    test_dataset = dataset.take(test_size)
-    train_dataset = dataset.skip(test_size)
-    val_dataset = dataset.skip(val_size)
-    train_dataset = dataset.take(train_size)
-
-    for batch in test_dataset:
-        print((batch))
-    #test_dataset.save(f"{destination}/test/")
-    #print(type(test_dataset))'''
 
 
 if __name__ == "__main__":
