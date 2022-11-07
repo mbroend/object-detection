@@ -92,7 +92,7 @@ To establish a baseline we've chosen to use a SSD Resnet 50 640x640 model  witho
 
 Execute the following to do so:
 ```
-cd /home/workspace/experiments/pretrained_model/
+cd /app/project/experiments/pretrained_model/
 
 wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
 
@@ -142,9 +142,8 @@ This section should detail the results of the reference experiment. It should in
 
 Most likely, this initial experiment did not yield optimal results. However, you can make multiple changes to the config file to improve this model. One obvious change consists in improving the data augmentation strategy. The [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file contains the different data augmentation method available in the Tf Object Detection API. To help you visualize these augmentations, we are providing a notebook: `Explore augmentations.ipynb`. Using this notebook, try different data augmentation combinations and select the one you think is optimal for our dataset. Justify your choices in the writeup.
 
-Keep in mind that the following are also available:
-* experiment with the optimizer: type of optimizer, learning rate, scheduler etc
-* experiment with the architecture. The Tf Object Detection API [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) offers many architectures. Keep in mind that the `pipeline.config` file is unique for each architecture and you will have to edit it.
+
+The following augmentations were added:
 
   data_augmentation_options {
     random_rgb_to_gray {
@@ -166,16 +165,24 @@ Keep in mind that the following are also available:
   }
 
 
+
+Upping the batch size to 3
+added number of steps to 30000
+
+
+
+
+
 **Important:** If you are working on the workspace, your storage is limited. You may to delete the checkpoints files after each experiment. You should however keep the `tf.events` files located in the `train` and `eval` folder of your experiments. You can also keep the `saved_model` folder to create your videos.
 
 ### Training
 To launch a training process with the config file from above use the following:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/improved.config
+python experiments/model_main_tf2.py --model_dir=experiments/experiment1/ --pipeline_config_path=experiments/experiment1/pipeline_new.config
 ```
 Once the training is finished, launch the evaluation process:
 ```
-python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeline_config_path=experiments/reference/improved.config --checkpoint_dir=experiments/reference/
+python experiments/model_main_tf2.py --model_dir=experiments/experiment1/ --pipeline_config_path=experiments/experiment1/pipeline_new.config --checkpoint_dir=experiments/experiment1/
 ```
 
 
@@ -184,14 +191,14 @@ python experiments/model_main_tf2.py --model_dir=experiments/reference/ --pipeli
 Modify the arguments of the following function to adjust it to your models:
 
 ```
-python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path experiments/reference/pipeline_new.config --trained_checkpoint_dir experiments/reference/ --output_directory experiments/reference/exported/
+python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path experiments/experiment1/pipeline_new.config --trained_checkpoint_dir experiments/experiment1/ --output_directory experiments/experiment1/exported/
 ```
 
 This should create a new folder `experiments/reference/exported/saved_model`. You can read more about the Tensorflow SavedModel format [here](https://www.tensorflow.org/guide/saved_model).
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
 ```
-python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/reference/exported/saved_model --tf_record_path /data/waymo/testing/segment-12200383401366682847_2552_140_2572_140_with_camera_labels.tfrecord --config_path experiments/reference/pipeline_new.config --output_path animation.gif
+python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/experiment1/exported/saved_model --tf_record_path /app/project/data/test/segment-11060291335850384275_3761_210_3781_210_with_camera_labels.tfrecord --config_path experiments/experiment1/pipeline_new.config --output_path animation.gif
 ```
 
 ## Results
