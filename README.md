@@ -185,6 +185,14 @@ Once the training is finished, launch the evaluation process:
 python experiments/model_main_tf2.py --model_dir=experiments/experiment1/ --pipeline_config_path=experiments/experiment1/pipeline_new.config --checkpoint_dir=experiments/experiment1/
 ```
 
+### Results
+![Example image](visualizations/improved_loss_classification_loss.png "Example image")
+![Example image](visualizations/improved_loss_localization_loss.png "Example image")
+![Example image](visualizations/improved_loss_regularization_loss.png "Example image")
+![Example image](visualizations/improved_loss_total_loss.png "Example image")
+![Example image](visualizations/improved_precision.png "Example image")
+![Example image](visualizations/improved_recall.png "Example image")
+
 
 ### Creating an animation
 #### Export the trained model
