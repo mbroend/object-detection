@@ -205,11 +205,16 @@ python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_conf
 This should create a new folder `experiments/reference/exported/saved_model`. You can read more about the Tensorflow SavedModel format [here](https://www.tensorflow.org/guide/saved_model).
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
+
+
 ```
 python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/experiment1/exported/saved_model --tf_record_path /app/project/data/test/segment-11060291335850384275_3761_210_3781_210_with_camera_labels.tfrecord --config_path experiments/experiment1/pipeline_new.config --output_path animation.gif
 ```
 
+
+![Example image](visualizations/animation.gif "Example image")
+![Example image](visualizations/animation1.gif "Example image")
+![Example image](visualizations/animation2.gif "Example image")
+
 ## Results
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
-
-
