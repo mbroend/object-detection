@@ -4,3 +4,5 @@ data/
 experiments/pretrained_model/*
 experiments/reference/ckpt*
 experiments/experiment1/ckpt*
+experiments/experiment1/exported/checkpoint/*
+experiments/experiment1/exported/saved_model/*
