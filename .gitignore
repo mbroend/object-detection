@@ -3,3 +3,4 @@
 data/
 experiments/pretrained_model/*
 experiments/reference/ckpt*
+experiments/experiment1/ckpt*
